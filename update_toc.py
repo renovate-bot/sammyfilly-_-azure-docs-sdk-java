@@ -14,7 +14,9 @@ TARGET_SOURCE_FOLDER = "docs-ref-autogen"
 root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), ".."))
 
 def check_against_targeted_namespaces(test_line, namespace_patterns_list):
-  return any([re.match(namespace_pattern, test_line) for namespace_pattern in namespace_patterns_list])
+  return any(
+      re.match(namespace_pattern, test_line)
+      for namespace_pattern in namespace_patterns_list)
 
 
 if __name__ == "__main__":
@@ -34,7 +36,7 @@ if __name__ == "__main__":
   files_for_move = []
 
   # filter that toc
-  for index, top_level_toc_item in enumerate(legacy_toc):
+  for top_level_toc_item in legacy_toc:
     if check_against_targeted_namespaces(top_level_toc_item['uid'], migrating_namespaces_regexs):
       toc_items.append(top_level_toc_item)
       files_for_move += glob.glob(os.path.join(root_dir, LEGACY_SOURCE_FOLDER, top_level_toc_item['uid']+"*"))
